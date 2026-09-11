@@ -1,0 +1,16 @@
+include LICENSE
+include CHANGELOG.rst
+include sphinx_docx/docx/LICENSE.python-docx
+
+# style.docx is generated at build time from these by create_style_file.py,
+# so both have to travel in the sdist for it to be buildable.
+include create_style_file.py
+recursive-include style_file/docx *
+
+exclude .gitattributes
+exclude .pylintrc
+exclude .readthedocs.yml
+prune .github
+prune .spec
+prune docs
+prune style_file/source

@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphinx-docx"
+version = "1.0.0"
+description = "Sphinx extension that builds Word (.docx) documents"
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE", "sphinx_docx/docx/LICENSE.python-docx"]
+authors = [{ name = "Nefti-sama" }]
+keywords = ["sphinx", "sphinx-extension", "docx", "word", "openxml", "ooxml"]
+
+# cairosvg and Pillow are imported lazily, only when a document contains an
+# SVG or a raster image, but SVG support is a headline feature of this fork so
+# they are hard requirements rather than an extra.
+dependencies = [
+    "Sphinx>=9.0",
+    "docutils>=0.22",
+    "Pygments>=2.12",
+    "lxml>=4.4",
+    "Pillow>=6.1",
+    "cairosvg>=2.5",
+    "six>=1.16",
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Framework :: Sphinx",
+    "Framework :: Sphinx :: Extension",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Software Development :: Documentation",
+]
+
+[project.optional-dependencies]
+# `.. math::` and the math role are rendered as OMML through these.
+math = ["latex2mathml", "mathml2omml"]
+docs = ["sphinx-rtd-theme>=0.4.3"]
+
+[project.urls]
+Homepage = "https://github.com/Nefti-sama/sphinx-docx"
+Repository = "https://github.com/Nefti-sama/sphinx-docx"
+Issues = "https://github.com/Nefti-sama/sphinx-docx/issues"
+Changelog = "https://github.com/Nefti-sama/sphinx-docx/blob/main/CHANGELOG.rst"
+
+[tool.setuptools]
+packages = ["sphinx_docx", "sphinx_docx.docx"]
+
+[tool.setuptools.package-data]
+# Generated from style_file/docx/ by create_style_file.py at build time.
+"sphinx_docx.docx" = ["style.docx"]
