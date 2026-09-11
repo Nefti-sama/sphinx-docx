@@ -1,8 +1,8 @@
 Customization of the document
 =============================
 
-sphinx_docx provides two ways to customize generated documents.
-The one is style file, and another is class based customization.
+sphinx-docx provides two ways to customize the generated document:
+the style file, and class based customization.
 
 Style file
 ----------
@@ -18,17 +18,17 @@ The inherited properties are
 The contents in the style file are ignored.
 
 If you want to change these properties, you must create a new style file.
-The lists of styles used by sphinx_docx, see :numref:`document_style_section`.
-About cover page, see :numref:`coverpage_section`.
-About section settings, see :numref:`section_settings_section`.
+For the styles sphinx-docx uses, see :numref:`document_style_section`.
+For the cover page, see :numref:`coverpage_section`.
+For the section settings, see :numref:`section_settings_section`.
 
 .. _`document_style_section`:
 
 Document style
 ^^^^^^^^^^^^^^
 
-In OpenXML, there are multiple style types.
-sphinx_docx uses character, paragraph, and table styles.
+OOXML has several style types. sphinx-docx uses character, paragraph, and
+table styles.
 The character styles are described in :numref:`character_style_table`,
 the paragraph styles are described in :numref:`paragraph_style_table`,
 and the table styles are described in :numref:`table_style_table`.
@@ -58,7 +58,7 @@ and the table styles are described in :numref:`table_style_table`.
    * - Subscript
      - This is :sub:`Subscript`.
    * - Problematic
-     - This is |Problematic|\ [#Problematic]_.
+     - Applied to text docutils could not parse\ [#Problematic]_.
    * - Title Reference
      - This is :title:`Title Reference`.
    * - Abbreviation
@@ -96,7 +96,7 @@ and the table styles are described in :numref:`table_style_table`.
      - Style for footnote.
        See :ref:`Footnote of Footnote Reference <footnote_reference_example>`.
    * - Bibliography
-     - .. [BIB] This is Bibliography.
+     - .. [BIB] This is Bibliography, cited as [BIB]_.
    * - | Definition Term
        | Definition
      - This is Definition Term : classifier one : classifier two
@@ -219,10 +219,9 @@ and the table styles are described in :numref:`table_style_table`.
 
 .. rubric:: Style automatic generation
 
-If some styles are not defined in the style file,
-sphinx_docx automatically generate the styles from other defined styles.
+A style missing from the style file is generated from another one.
 :numref:`based_paragraph_style_figure` and :numref:`based_table_style_figure`
-represents which style is generated from which style.
+show which style is generated from which.
 
 .. graphviz::
    :caption: Generation relationship for paragraph styles
@@ -315,9 +314,9 @@ represents which style is generated from which style.
 .. rubric:: Footnotes
 
 .. [#Problematic]
-    The Problematic style is used only when some errors exists in documents
-    (e.g. using non-exsistence cross reference, unknown rorles).
-    Then it is almost unnecessary to define this style.
+    The Problematic style is used only where the document has an error
+    (a cross reference to a missing target, an unknown role), so defining it
+    is rarely necessary.
 .. [#FootnoteExample] This is Footnote Text.
 
 .. _`user_defined_styles_section`:
@@ -325,9 +324,9 @@ represents which style is generated from which style.
 User defined styles
 ^^^^^^^^^^^^^^^^^^^
 
-In addition to above styles, you can define your original styles.
-These styles are applied to elements with the corresponding class name
-The mapping from class name to original style are defined by `docx_style_names` configuration.
+Besides the styles above, you can define your own. They are applied to
+elements carrying the matching class name. The mapping from class name to
+style name is the ``docx_style_names`` configuration.
 
 .. code-block:: python
 
@@ -338,7 +337,7 @@ The mapping from class name to original style are defined by `docx_style_names` 
    }
    # And define Strike and Custom Table styles in the style file specified docx_style
 
-The following reStructuredText show how to use the custom styles.
+The following reStructuredText shows how to use the custom styles.
 
 .. code-block:: rst
 
@@ -382,30 +381,31 @@ for the paragraphs that element and its children produce:
 Cover page
 ^^^^^^^^^^
 
-If ``docx_coverpage`` is true, the cover page of the style file is inserted into the generated document.
-sphinx_docx treat the first structured document tag with "Cover Pages" docPartGallery as the cover page.
-If no tag is found, the contents far to the first section break are used as the cover page.
-If no section break is found, the contents far to the first page break are used as the cover page.
+If ``docx_coverpage`` is true, the cover page of the style file is inserted
+into the generated document. The first structured document tag with the
+"Cover Pages" docPartGallery is taken as the cover page. If there is no such
+tag, the contents up to the first section break are used; if there is no
+section break, the contents up to the first page break.
 
 .. topic:: How to create structured document tag with "Cover Pages" docPartGallery
 
-   It seems that Office Word can not create only structured document tag.
-   Therefore, if you want to create your original cover page, you must insert
-   a pre designed cover page and then modify the cover page.
+   Office Word cannot create a structured document tag on its own. To build
+   your own cover page, insert one of the pre-designed cover pages and then
+   edit it.
 
 .. _`section_settings_section`:
 
 Section settings
 ^^^^^^^^^^^^^^^^
 
-The generated document inherits the section settings from the style file.
-The settings includes header, footer, page size, page margins, page borders, and so on.
+The generated document inherits the section settings from the style file:
+header, footer, page size, page margins, page borders, and so on.
 
-If the style file includes multiple sections, sphinx_docx apply the first section.
-If you want to apply other section from the middle of the document,
-use :ref:`sphinx_docx custom class <class_based_customization_section>`.
-In the bellow example, section A and C use the first section settings,
-and section B uses the second section settings.
+If the style file has several sections, the first one is applied. To switch to
+another section part way through the document, use a
+:ref:`custom class <class_based_customization_section>`.
+In the example below, sections A and C use the first section settings, and
+section B uses the second.
 
 .. code-block:: rst
    :caption: Example to specify section settings
@@ -437,7 +437,7 @@ and section B uses the second section settings.
    ``rst-class`` applies to the element which follows the directive, the
    directive has to be placed directly above a section title; anywhere else
    the class lands on a paragraph or a table, where it does nothing.
-   sphinx_docx warns about such a class, and about a class which begins with
+   sphinx-docx warns about such a class, and about a class which begins with
    ``docx-section`` but is not spelled like one of the forms above.
 
 .. _`class_based_customization_section`:
@@ -445,11 +445,11 @@ and section B uses the second section settings.
 Class based customization
 -------------------------
 
-sphinx_docx provides class based customization.
-Elements with special classes which has "docx-" prefix, are arranged based on the specified class by sphinx_docx.
+Elements carrying a class with the ``docx-`` prefix are laid out according to
+that class.
 
-In the bellow example, the table is arranged in landscape page.
-This is useful for tables with many columns, or horizontally long figures.
+In the example below, the table is placed on a landscape page. This is useful
+for tables with many columns, or for wide figures.
 
 .. code-block:: rst
 
@@ -459,12 +459,12 @@ This is useful for tables with many columns, or horizontally long figures.
       A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
       1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
 
-:numref:`custom_class_table` shows the list of custom classes.
-For each class, kinds of elements enable to be applied the class are defined.
+:numref:`custom_class_table` lists the custom classes. Each applies only to
+the kinds of element named in the Target column.
 
 .. _`custom_class_table`:
 
-.. list-table:: Speciall custom class list
+.. list-table:: Custom class list
    :header-rows: 1
    :stub-columns: 1
    :align: center

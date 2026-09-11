@@ -1,14 +1,19 @@
 Document properties
 ===================
 
-sphinx_docx is enable to embed document properties into the generated document.
-The document properties can be referenced from the cover page (Use Quick Parts of Office Word).
+sphinx-docx embeds document properties into the generated document. They can
+be referenced from the cover page, through Insert > Quick Parts > Field in
+Office Word.
 
-The document properties is defined by **docx_documents's docproperties** configuration.
-The docproperties is a dictionary from property name to the value.
-sphinx_docx treats some names as the properties defined by OOXML.
+The properties are the *docproperties* item of the ``docx_documents``
+configuration: a dictionary from property name to value. Some names are
+treated as the properties OOXML defines.
 
-Property names included in the below list are used as the Core Properties [ECMA376]_.
+A ``DOCPROPERTY`` field in the style file shows the value in Office Word once
+Word recalculates the field. For every other reader, the value is baked into
+the document by ``docx_bake_property_fields``, which is on by default.
+
+The names below are written as Core Properties [ECMA376]_.
 
 .. hlist::
    :columns: 3
@@ -29,8 +34,8 @@ Property names included in the below list are used as the Core Properties [ECMA3
    - created
    - modified
 
-The value of "created" or "modified" property must be a ``date`` or
-``datetime`` object, or a string formatted by one of the following formats.
+The value of "created" or "modified" must be a ``date`` or ``datetime``
+object, or a string in one of these formats.
 
 .. hlist::
    :columns: 3
@@ -43,14 +48,14 @@ The value of "created" or "modified" property must be a ``date`` or
    - ``YYYY-MM-DDThh:mm:ss``
    - ``YYYY-MM-DDThh:mm:ss.s``
 
-The value of "lastPrinted" must be a ``date`` or ``datetime`` object,
-or a string formatted by ``YYYY-MM-DDThh:mm:ss``.
-All times expressed by string type are interpreted as system local time.
+The value of "lastPrinted" must be a ``date`` or ``datetime`` object, or a
+string in the ``YYYY-MM-DDThh:mm:ss`` format. Times given as strings are read
+as system local time.
 
-The value of "keywords" must be a string or a list of strings.
-All value of other core properties must be a string.
+The value of "keywords" must be a string or a list of strings. Every other
+core property must be a string.
 
-Property names included in the below list are used as the Extended Properties [ECMA376]_.
+The names below are written as Extended Properties [ECMA376]_.
 
 .. hlist::
    :columns: 3
@@ -58,7 +63,7 @@ Property names included in the below list are used as the Extended Properties [E
    * company
    * manager
 
-Property names included in the below list are used as the Cover Page Properties [MSOE376]_.
+The names below are written as Cover Page Properties [MSOE376]_.
 
 .. hlist::
    :columns: 3
@@ -70,12 +75,11 @@ Property names included in the below list are used as the Cover Page Properties 
    * companyPhone
    * publishDate
 
-The value of "publishDate" property must be a ``date`` or ``datetime`` object,
-or a string formatted by one of the above formats.
+The value of "publishDate" must be a ``date`` or ``datetime`` object, or a
+string in one of the formats above.
 
-The other keys are used as custom properties.
-The value of custom properties must be an integer, float, string, bool,
-or ``datetime`` object.
+Every other key becomes a custom property. Its value must be an integer,
+float, string, bool, or ``datetime`` object.
 
 .. rubric:: Citations
 

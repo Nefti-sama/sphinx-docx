@@ -1,19 +1,14 @@
-:Copyright: 2019 by amedama41
-:Licence: MIT Licence
+###########
+sphinx-docx
+###########
 
-.. sphinx_docx Documentation documentation master file, created by
-   sphinx-quickstart on Sun Aug  4 15:50:10 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-sphinx_docx Documentation
-=========================
-
-:Author: amedama41
 :Licence: MIT
 
-sphinx_docx is an extension for Sphinx.
-This extension enables to generate docx document.
+sphinx-docx is a Sphinx builder extension that generates Office Open XML
+(``.docx``) documents. Word itself is not needed, and not used.
+
+The distribution is ``sphinx-docx``; the module you import and name in
+``extensions`` is ``sphinx_docx``.
 
 .. toctree::
    :maxdepth: 3
