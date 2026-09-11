@@ -1,12 +1,12 @@
 # Configuration file for the Sphinx documentation builder.
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 import datetime
-import os
-import sys
 from importlib.metadata import PackageNotFoundError, version as _version
 
-# Document the checkout, not whatever is installed site-wide.
-sys.path.insert(0, os.path.abspath('../..'))
+# No sys.path fiddling: autodoc and the builder both use the installed
+# sphinx-docx. The checkout carries no generated sphinx_docx/docx/style.docx,
+# so putting it first on sys.path breaks every build that does not set
+# docx_style -- which is what the CI docx build hit.
 
 # -- Project information -----------------------------------------------------
 
