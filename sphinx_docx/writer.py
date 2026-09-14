@@ -1726,12 +1726,19 @@ class DocxTranslator(nodes.NodeVisitor):
             table_width = max(
                 base_width - convert_to_twip_size(margin, base_width), 1)
         if style is None:
-            #TODO: Make sure that the style is at least admonition
-            style = next((
+            # Use the first of the 'admonition-*' class style, the tagname
+            # style and 'Admonition' that the template defines. A generic
+            # admonition gets an 'admonition-<title>' class from docutils, and
+            # a style created for it would lose the admonition's shading:
+            # LibreOffice does not inherit conditional table formatting.
+            candidates = [
                 ' '.join(word.capitalize() for word in c.split('-'))
-                for c in node.get('classes') if c.startswith('admonition-')),
-                         'Admonition %s' % node.tagname.capitalize())
-            self._docx.create_style('table', style, 'Based Admonition', True)
+                for c in node.get('classes') if c.startswith('admonition-')]
+            if node.tagname != 'admonition':
+                candidates.append('Admonition %s' % node.tagname.capitalize())
+            style = next((
+                name for name in candidates
+                if self._docx.get_style_info(name) is not None), 'Admonition')
         # An admonition must not be torn across a page break: in_single_page
         # keeps every row with the next one, row_splittable=False adds
         # w:cantSplit so no single row breaks either. Word still splits one
