@@ -579,6 +579,9 @@ class Paragraph(ParagraphElement):
         para.extend(self._contents_stack[0])
         return para
 
+# Space, in twips, between a rotated header and the row's edges (about 6 px).
+ROTATED_HEADER_PADDING = 90
+
 class Table(TableElement):
     """A table being built up row by row.
 
@@ -772,6 +775,16 @@ class Table(TableElement):
         if last is None or isinstance(last, TableElement):
             cell.append(Paragraph())
 
+        if rotation:
+            # Turned text starts at the top of the row. Indenting both ends
+            # keeps it off the top border and the first data row; the indent
+            # follows the text direction, where a cell margin would not.
+            for elem in cell:
+                if isinstance(elem, Paragraph):
+                    if not elem._indent:
+                        elem._indent = ROTATED_HEADER_PADDING
+                    if not elem._right_indent:
+                        elem._right_indent = ROTATED_HEADER_PADDING
         if keep_next:
             first = next(e for e in cell if isinstance(e, contents_types))
             first.keep_next()

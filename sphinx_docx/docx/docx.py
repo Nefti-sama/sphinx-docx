@@ -1160,6 +1160,9 @@ def make_cell(index, is_first_column, cellsize, grid_span, vmerge, rotation,
         property_tree.append([['w:vMerge', {'w:val': vmerge}]])
     if rotation:
         property_tree.append([['w:textDirection', {'w:val': 'tbRlV'}]])
+        # Turned text lays its lines out across the column, so vAlign places
+        # it horizontally: without this it hugs the right edge.
+        valign = valign or 'center'
     if no_wrap is not None:
         property_tree.append([['w:noWrap', {'w:val': str(int(no_wrap))}]])
     if valign is not None:
