@@ -9,3 +9,9 @@ the ``docx`` builder name are unchanged, so only the ``extensions`` entry in
 
 The history before this point is the fork's, and of the ``docxbuilder``
 project it descends from.
+
+
+Release 1.1.0 (2026-09-17)
+--------------------------
+
+Added padding for 90° headers
